@@ -1,0 +1,28 @@
+experiment:
+  name: default_telemetry_experiment
+  mode: fedavg_secureagg_dp
+  dataset: synthetic_telemetry
+  num_clients: 500
+  rounds: 10
+  clients_per_round: 50
+  local_epochs: 2
+  dropout_rate: 0.15
+  secure_agg_enabled: true
+  dp_enabled: true
+  clipping_norm: 1.0
+  noise_multiplier: 0.5
+  epsilon: 2.0
+  delta: 0.000001
+  non_iid_severity: 1.0
+  random_seed: 42
+
+dataset:
+  num_clients: 500
+  min_records_per_client: 5
+  max_records_per_client: 50
+  features:
+    - writing_tools
+    - visual_search
+    - dictation
+    - translation
+    - spotlight

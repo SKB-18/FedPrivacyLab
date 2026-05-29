@@ -1,0 +1,18 @@
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+sqlalchemy>=2.0.25
+numpy>=1.26.0
+pandas>=2.1.0
+scikit-learn>=1.4.0
+# Windows: CPU-only (native); 2.15–2.19 tested. GPU requires WSL2 or DirectML.
+tensorflow>=2.15.0,<2.21.0
+streamlit>=1.31.0
+plotly>=5.18.0
+pyyaml>=6.0.1
+httpx>=0.26.0
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+kaleido>=0.2.1

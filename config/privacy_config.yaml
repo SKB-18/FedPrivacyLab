@@ -1,0 +1,33 @@
+contribution_bounds:
+  max_events_per_client_per_round: 20
+  max_failures_per_client_per_round: 5
+  max_latency_ms_per_event: 5000
+  max_latency_sum_per_client: 100000
+
+dataset_overrides:
+  real_hdfs_loghub:
+    max_events_per_client_per_round: 50
+    max_latency_sum_per_client: 250000
+    min_clients_for_reporting: 5
+  real_hdfs_loghub_pid:
+    max_events_per_client_per_round: 30
+    max_latency_sum_per_client: 150000
+    min_clients_for_reporting: 5
+  synthetic_telemetry:
+    min_clients_for_reporting: 100
+
+differential_privacy:
+  default_epsilon: 2.0
+  default_delta: 0.000001
+  default_noise_multiplier: 0.5
+  default_clipping_norm: 1.0
+  count_sensitivity: 1.0
+
+cohort:
+  min_clients_for_reporting: 100
+
+secure_aggregation:
+  simulated: true
+
+dropout:
+  rates_to_test: [0.1, 0.2, 0.3]

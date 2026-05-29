@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+data/
+*.db
+.env
+.spec_extracted.txt
+.qodo/
