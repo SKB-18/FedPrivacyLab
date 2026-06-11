@@ -4,6 +4,9 @@
 
 Graduate-level research project simulating decentralized clients that run aggregate analytics and federated model training **without centralizing raw telemetry**. Implements FedAvg, client selection, dropout simulation, update clipping, differential privacy noise, secure aggregation simulation, and Streamlit dashboards for privacy–utility tradeoff analysis.
 
+**Full documentation:** [docs/COMPLETE_GUIDE.md](docs/COMPLETE_GUIDE.md) — architecture, datasets, privacy mechanisms, API, graphs, results, and testing (38 tests).  
+**Word version:** [docs/FedPrivacyLab_Complete_Guide.docx](docs/FedPrivacyLab_Complete_Guide.docx)
+
 ## Problem Statement
 
 Organizations need useful aggregate metrics and ML models from distributed user data, but collecting raw logs centrally creates privacy risk. Federated learning keeps data local, yet **FL alone is not automatically private**—individual updates can still leak information.

@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fedprivacylab-dashboard
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "fedprivacylab.labels" . | nindent 4 }}
+    app: dashboard
+spec:
+  replicas: {{ .Values.dashboard.replicaCount }}
+  selector:
+    matchLabels:
+      app: dashboard
+  template:
+    metadata:
+      labels:
+        app: dashboard
+    spec:
+      containers:
+        - name: dashboard
+          image: "{{ .Values.global.image.repository }}:{{ .Values.global.image.tag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.dashboard.port }}
+          command:
+            - streamlit
+            - run
+            - dashboard/streamlit_app.py
+            - "--server.address=0.0.0.0"
+            - "--server.port=8501"
+            - "--server.headless=true"
+          env:
+            - name: API_BASE_URL
+              value: "http://fedprivacylab-coordinator:{{ .Values.coordinator.port }}"
+            - name: PYTHONPATH
+              value: "/workspace"
+          resources:
+            {{- toYaml .Values.dashboard.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: {{ .Values.dashboard.port }}
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /_stcore/health
+              port: {{ .Values.dashboard.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+      volumes:
+        - name: data-volume
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: fedprivacylab-data-pvc
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

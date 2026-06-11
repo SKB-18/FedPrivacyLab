@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fedprivacylab-coordinator
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "fedprivacylab.labels" . | nindent 4 }}
+    app: coordinator
+spec:
+  type: {{ .Values.coordinator.service.type }}
+  selector:
+    app: coordinator
+  ports:
+    - name: http
+      port: {{ .Values.coordinator.port }}
+      targetPort: {{ .Values.coordinator.port }}

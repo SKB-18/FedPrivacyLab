@@ -1,0 +1,42 @@
+global:
+  namespace: fedprivacylab
+  image:
+    repository: fedprivacylab
+    tag: latest
+    pullPolicy: IfNotPresent
+
+coordinator:
+  replicaCount: 1
+  port: 8000
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+  service:
+    type: ClusterIP
+  env:
+    DATABASE_URL: "sqlite:////data/fedprivacylab.db"
+    PYTHONPATH: "/workspace"
+
+dashboard:
+  replicaCount: 1
+  port: 8501
+  resources:
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+  service:
+    type: LoadBalancer
+    externalPort: 80
+
+persistence:
+  enabled: true
+  size: 1Gi
+  storageClass: standard
+  accessMode: ReadWriteOnce

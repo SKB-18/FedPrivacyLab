@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fedprivacylab-dashboard
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    {{- include "fedprivacylab.labels" . | nindent 4 }}
+    app: dashboard
+spec:
+  type: {{ .Values.dashboard.service.type }}
+  selector:
+    app: dashboard
+  ports:
+    - name: http
+      port: {{ .Values.dashboard.service.externalPort }}
+      targetPort: {{ .Values.dashboard.port }}

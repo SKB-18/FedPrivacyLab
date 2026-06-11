@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fedprivacylab
+  labels:
+    app.kubernetes.io/name: fedprivacylab
+    app.kubernetes.io/managed-by: kubectl

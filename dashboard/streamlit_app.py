@@ -21,6 +21,8 @@ st.sidebar.markdown(
 )
 st.sidebar.markdown("---")
 
+st.sidebar.markdown("**Core**")
+
 pages = {
     "Overview": "pages/overview.py",
     "Real Data Scenario": "pages/real_data_scenario.py",
@@ -32,6 +34,10 @@ pages = {
     "Client Participation": "pages/client_participation.py",
     "Risk Report": "pages/risk_report.py",
     "System Explanation": "pages/system_explanation.py",
+    # ── Enhanced Edition ──────────────────────────────────────────────────────
+    "Benchmarking": "pages/benchmarking.py",
+    "Model Optimization": "pages/model_optimization.py",
+    "Inference Metrics": "pages/inference_metrics.py",
 }
 
 selection = st.sidebar.radio("Navigate", list(pages.keys()))

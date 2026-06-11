@@ -1,0 +1,135 @@
+version: "3.9"
+
+# Federated Inference Stack
+# ─────────────────────────
+# Services:
+#   inference-coordinator  — FastAPI server (port 8001), model registry, metadata aggregator
+#   client-1/2/3           — Containerized inference clients (local predictions only)
+#   inference-dashboard    — Streamlit dashboard showing live inference metrics
+#
+# Privacy guarantee: client containers make predictions locally and only send
+# aggregate counts and timing to the coordinator. No raw data leaves the client.
+
+networks:
+  inference-net:
+    driver: bridge
+
+volumes:
+  model-cache:    # Shared model artifacts (TFLite files)
+  inference-db:   # SQLite database for the coordinator
+
+services:
+
+  # ── Inference Coordinator (FastAPI, port 8001) ─────────────────────────────
+  inference-coordinator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      uvicorn fedprivacylab.inference.coordinator:app
+      --host 0.0.0.0
+      --port 8001
+      --log-level info
+    ports:
+      - "8001:8001"
+    environment:
+      PYTHONPATH: /workspace
+      INFERENCE_DB_URL: /data/inference.db
+    volumes:
+      - inference-db:/data
+      - model-cache:/workspace/model_cache
+    networks:
+      - inference-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ── Inference Clients ──────────────────────────────────────────────────────
+  client-1:
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
+    environment:
+      COORDINATOR_URL: http://inference-coordinator:8001
+      CLIENT_ID: client_01
+      NUM_PREDICTIONS_PER_BATCH: 5
+      BATCH_INTERVAL_SECONDS: 10
+      FEATURE_DIM: 8
+      FEDCLIENT_CACHE_DIR: /model_cache
+    volumes:
+      - model-cache:/model_cache
+    networks:
+      - inference-net
+    depends_on:
+      inference-coordinator:
+        condition: service_healthy
+    restart: unless-stopped
+
+  client-2:
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
+    environment:
+      COORDINATOR_URL: http://inference-coordinator:8001
+      CLIENT_ID: client_02
+      NUM_PREDICTIONS_PER_BATCH: 5
+      BATCH_INTERVAL_SECONDS: 13
+      FEATURE_DIM: 8
+      FEDCLIENT_CACHE_DIR: /model_cache
+    volumes:
+      - model-cache:/model_cache
+    networks:
+      - inference-net
+    depends_on:
+      inference-coordinator:
+        condition: service_healthy
+    restart: unless-stopped
+
+  client-3:
+    build:
+      context: .
+      dockerfile: docker/client.dockerfile
+    environment:
+      COORDINATOR_URL: http://inference-coordinator:8001
+      CLIENT_ID: client_03
+      NUM_PREDICTIONS_PER_BATCH: 5
+      BATCH_INTERVAL_SECONDS: 17
+      FEATURE_DIM: 8
+      FEDCLIENT_CACHE_DIR: /model_cache
+    volumes:
+      - model-cache:/model_cache
+    networks:
+      - inference-net
+    depends_on:
+      inference-coordinator:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Inference Dashboard (Streamlit, port 8502) ─────────────────────────────
+  inference-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      streamlit run dashboard/streamlit_app.py
+      --server.address 0.0.0.0
+      --server.port 8502
+      --server.headless true
+    ports:
+      - "8502:8502"
+    environment:
+      PYTHONPATH: /workspace
+      INFERENCE_COORDINATOR_URL: http://inference-coordinator:8001
+    networks:
+      - inference-net
+    depends_on:
+      - inference-coordinator
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8502/_stcore/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
