@@ -102,12 +102,13 @@ All 5 tables | ✅ |
 | GET health | ✅ |
 | GET datasets/real-hdfs/summary | ➕ |
 
-## §14 Dashboard (8 tabs + real data)
+## §14 Dashboard (13 pages: 10 core + 3 Enhanced Edition)
 
-| Tab | Status |
-|-----|--------|
+| Page | Status |
+|------|--------|
 | Overview | ✅ |
 | Real Data Scenario | ➕ |
+| Results Gallery | ➕ |
 | Federated Analytics | ✅ (enhanced charts) |
 | Training Progress | ✅ |
 | Privacy Controls | ✅ |
@@ -115,6 +116,9 @@ All 5 tables | ✅ |
 | Client Participation | ✅ |
 | Risk Report | ✅ |
 | System Explanation | ✅ |
+| Benchmarking (FedAvg vs FedProx) | ➕ Enhanced Edition |
+| Model Optimization (TFLite quantization) | ➕ Enhanced Edition |
+| Inference Metrics (live coordinator) | ➕ Enhanced Edition |
 
 ## §15–16 Threat Model & Implementation
 

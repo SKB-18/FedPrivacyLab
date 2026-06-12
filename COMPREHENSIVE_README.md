@@ -94,16 +94,26 @@ Raw Data (Local)
 
 ### 📈 Dashboard (Streamlit)
 
-8 interactive tabs with 40+ charts:
+13 interactive pages with 40+ charts:
+
+**Core pages:**
 
 1. **Overview** — Experiment config, status, timeline
-2. **Federated Analytics** — Metric comparison (true vs federated vs DP-noisy)
-3. **Training Progress** — Accuracy, F1, loss, ROC-AUC curves
-4. **Privacy Controls** — Epsilon consumption, clipping rates, secure agg status
-5. **Utility Tradeoff** — Privacy strength vs accuracy/error plots
-6. **Client Participation** — Dropout rates, update norms, participation history
-7. **Risk Report** — Threat model, mitigations, recommendation
-8. **System Explanation** — Plain-English design walkthrough with threat model
+2. **Real Data Scenario** — HDFS log-to-feature mapping narrative
+3. **Results Gallery** — Links to the 42-chart generated graph gallery
+4. **Federated Analytics** — Metric comparison (true vs federated vs DP-noisy)
+5. **Training Progress** — Accuracy, F1, loss, ROC-AUC curves
+6. **Privacy Controls** — Epsilon consumption, clipping rates, secure agg status
+7. **Utility Tradeoff** — Privacy strength vs accuracy/error plots
+8. **Client Participation** — Dropout rates, update norms, participation history
+9. **Risk Report** — Threat model, mitigations, recommendation
+10. **System Explanation** — Plain-English design walkthrough with threat model
+
+**Enhanced Edition pages:**
+
+11. **Benchmarking** — FedAvg vs FedProx comparison: accuracy curves, communication overhead, training time per round; run via *Run Benchmark Now* button
+12. **Model Optimization** — TFLite quantization tradeoffs (int8 / float16 / dynamic): model size, accuracy drop, inference latency; run via *Run Quantization Benchmark*
+13. **Inference Metrics** — Live monitoring of the federated inference coordinator (port 8001); displays demo charts when coordinator is offline
 
 ### 🚀 Deployment
 
@@ -201,7 +211,7 @@ Raw Data (Local)
                    ▼
       ┌──────────────────────────────────┐
       │ Streamlit Dashboard              │
-      │ (8 tabs, 40+ interactive charts) │
+      │ (13 pages, 40+ interactive charts) │
       └──────────────────────────────────┘
 ```
 

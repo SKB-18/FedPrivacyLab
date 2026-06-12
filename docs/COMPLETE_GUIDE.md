@@ -209,7 +209,7 @@ Per architecture spec §6 (12 steps):
 | **ML** | TensorFlow/Keras 2.15–2.20, scikit-learn | Binary classifier, metrics |
 | **Data** | NumPy, Pandas | Aggregation, graph data prep |
 | **Config** | PyYAML | Experiment and privacy configuration |
-| **Dashboard** | Streamlit + Plotly | 10 interactive pages |
+| **Dashboard** | Streamlit + Plotly | 13 interactive pages |
 | **Graphs** | Plotly + Kaleido | 42 canonical PNG/HTML charts |
 | **Testing** | pytest (38 tests) | Unit, integration, e2e API |
 | **Container** | Docker Compose | API :8000, Dashboard :8501 |
@@ -521,6 +521,7 @@ Run: `streamlit run dashboard/streamlit_app.py`
 |------|------|-------|
 | **Overview** | `overview.py` | Experiment config and status |
 | **Real Data Scenario** | `real_data_scenario.py` | HDFS log mapping narrative |
+| **Results Gallery** | `results_gallery.py` | Links to generated graph gallery |
 | **Federated Analytics** | `federated_analytics.py` | True vs federated vs DP charts |
 | **Training Progress** | `training_progress.py` | Accuracy, ROC-AUC, F1 by round |
 | **Privacy Controls** | `privacy_controls.py` | ε, clipping, noise multiplier |
@@ -528,7 +529,9 @@ Run: `streamlit run dashboard/streamlit_app.py`
 | **Client Participation** | `client_participation.py` | Dropout, update norms, clipping rate |
 | **Risk Report** | `risk_report.py` | Threat model + mitigations |
 | **System Explanation** | `system_explanation.py` | Plain-English design walkthrough |
-| **Results Gallery** | `results_gallery.py` | Links to generated graph gallery |
+| **Benchmarking** | `benchmarking.py` | FedAvg vs FedProx: accuracy, communication overhead, training time; click *Run Benchmark Now* or run `python -m fedprivacylab.benchmarking.suite` |
+| **Model Optimization** | `model_optimization.py` | TFLite quantization (int8 / float16 / dynamic): size, accuracy drop, latency; click *Run Quantization Benchmark* |
+| **Inference Metrics** | `inference_metrics.py` | Live federated inference coordinator metrics (port 8001); demo mode when offline; start with `uvicorn fedprivacylab.inference.coordinator:app --port 8001` |
 
 ---
 
@@ -741,8 +744,14 @@ FedPrivacyLab/
 ├── dashboard/
 │   ├── streamlit_app.py
 │   ├── db_utils.py
-│   └── pages/                      # 10 dashboard pages
-├── scripts/                        # 10 workflow scripts
+│   └── pages/                      # 13 dashboard pages
+├── fedprivacylab/                  # Enhanced Edition package
+│   ├── benchmarking/suite.py       # FedAvg vs FedProx benchmark suite
+│   ├── inference/coordinator.py    # Federated inference coordinator (FastAPI, port 8001)
+│   ├── quantization.py             # TFLite post-training quantization
+│   ├── client_sdk.py               # Client-side inference SDK
+│   └── datasets.py                 # Dataset helpers
+├── scripts/                        # 11 workflow scripts
 ├── tests/                          # 15 test files, 38 tests
 ├── docs/
 │   └── COMPLETE_GUIDE.md           # This document

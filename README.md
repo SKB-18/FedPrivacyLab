@@ -71,6 +71,16 @@ Round Coordinator
 4. **Differential privacy** — Laplace noise on counts; Gaussian noise on sums/updates  
 5. **Cohort suppression** — suppresses reports when &lt; 100 clients participate  
 
+## Enhanced Edition (`fedprivacylab/` package)
+
+Three additional capabilities beyond the core spec:
+
+| Feature | How to use |
+|---------|-----------|
+| **FedAvg vs FedProx benchmarking** | Click *Run Benchmark Now* on the Benchmarking page, or `python -m fedprivacylab.benchmarking.suite` |
+| **TFLite model quantization** | Click *Run Quantization Benchmark* on the Model Optimization page (int8 / float16 / dynamic) |
+| **Federated inference coordinator** | `uvicorn fedprivacylab.inference.coordinator:app --port 8001`; monitor live in the Inference Metrics page |
+
 ## Quick Start
 
 ### Prerequisites
@@ -156,27 +166,39 @@ pytest tests/ -v
 | `test_integration.py` | Coordinator + DB |
 | `test_e2e_api.py` | Full API lifecycle |
 
-## Dashboard Tabs
+## Dashboard Pages (13)
+
+**Core**
 
 1. **Overview** — experiment config and status  
-2. **Federated Analytics** — true vs federated vs DP-noisy metrics  
-3. **Training Progress** — accuracy, ROC-AUC, loss, F1 by round  
-4. **Privacy Controls** — epsilon, clipping, secure agg settings  
-5. **Utility Tradeoff** — privacy strength vs accuracy/error  
-6. **Client Participation** — dropout, update norms, clipping rate  
-7. **Risk Report** — threat model and mitigations  
-8. **System Explanation** — plain-English design walkthrough  
+2. **Real Data Scenario** — HDFS log-to-feature mapping narrative  
+3. **Results Gallery** — links to the 42-chart generated graph gallery  
+4. **Federated Analytics** — true vs federated vs DP-noisy metrics  
+5. **Training Progress** — accuracy, ROC-AUC, loss, F1 by round  
+6. **Privacy Controls** — epsilon, clipping, secure agg settings  
+7. **Utility Tradeoff** — privacy strength vs accuracy/error  
+8. **Client Participation** — dropout, update norms, clipping rate  
+9. **Risk Report** — threat model and mitigations  
+10. **System Explanation** — plain-English design walkthrough  
+
+**Enhanced Edition**
+
+11. **Benchmarking** — FedAvg vs FedProx: accuracy curves, communication overhead, training time; click *Run Benchmark Now* or generate via `python -m fedprivacylab.benchmarking.suite`  
+12. **Model Optimization** — TFLite quantization (int8 / float16 / dynamic): size reduction, accuracy drop, latency; click *Run Quantization Benchmark*  
+13. **Inference Metrics** — live monitoring of the federated inference coordinator (port 8001); shows demo charts when coordinator is offline; start with `uvicorn fedprivacylab.inference.coordinator:app --port 8001`
 
 ## Project Structure
 
 ```
 FedPrivacyLab/
-  app/           # FastAPI backend, coordinator, clients, privacy, learning
-  config/        # experiment_config.yaml, privacy_config.yaml
-  dashboard/     # Streamlit visual analytics
-  tests/         # unit, integration, e2e
-  scripts/       # demo runner
-  data/          # SQLite DB (created at runtime)
+  app/              # FastAPI backend, coordinator, clients, privacy, learning
+  config/           # experiment_config.yaml, privacy_config.yaml
+  dashboard/        # Streamlit visual analytics (13 pages)
+  fedprivacylab/    # Enhanced Edition package (benchmarking, inference, quantization)
+  tests/            # unit, integration, e2e (38 tests)
+  scripts/          # workflow scripts
+  docs/             # complete guide (MD + DOCX)
+  data/             # SQLite DB, graphs, comparisons (created at runtime, gitignored)
 ```
 
 ## Limitations

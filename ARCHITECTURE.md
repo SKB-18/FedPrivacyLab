@@ -65,7 +65,7 @@ FedPrivacyLab follows a **master-worker** federated learning architecture with l
         │   DASHBOARD      │
         │   (Streamlit)    │
         │                  │
-        │ 8 Tabs, 40+ Plots
+        │ 13 Pages, 40+ Charts
         └──────────────────┘
 ```
 
