@@ -1,0 +1,33 @@
+﻿YES run_single_comparison_mode
+YES reset_ml_runtime
+YES fillna
+YES latest_comparison_experiments
+YES aggregate_client_deltas
+YES separate Python subprocess
+YES 0.12
+YES noise_multiplier
+YES exp_ids=[244
+YES manifest.json
+YES 74.8
+YES 24.7
+YES 29.1
+NO  mermaid
+YES flowchart
+NO  POST /api
+YES simulate/non-iid
+YES client_participation
+YES feature_encoding
+YES attack_simulator
+YES privacy_utility_evaluator
+YES config_loader
+YES metric_types
+NO  class_weight
+NO  MIT
+NO  kaleido
+YES WSL2
+YES DirectML
+YES gitignored
+YES 20260529_072241
+YES DataXceiver
+YES 500û1000ms
+NO  500-1000ms

@@ -10,3 +10,4 @@ data/
 .env
 .spec_extracted.txt
 .qodo/
+.claude/
